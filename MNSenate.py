@@ -54,6 +54,7 @@ def scrapeSenate():
         party = rep4[1].split(',')[1].replace(")","").replace(" ","")
         partyList.append(party)
         district = rep4[1].split(',')[0]
+        print district
         districtList.append(district)
         name = rep4[0]
         nameList.append(name)
@@ -89,11 +90,12 @@ def scrapeSenate():
     #pandas
 
     df = pd.DataFrame(np.column_stack([nameList, districtList, partyList, officeList, cityList, phoneList, emailList]),
-                         columns=['Senator', 'District', 'Party', 'Office Address', 'City, State, Zip', 'Phone Number', 'Email'])
+                         columns=['Senator', 'District', 'Party', 'Office_Address', 'City_State_Zip', 'Phone_Number', 'Email'])
     df.drop_duplicates(inplace = True)
     df['Senator'] = df['Senator'].str.strip()
-    df['City, State, Zip'] = df['City, State, Zip'].str.strip()
-    df['Phone Number'] = df['Phone Number'].str.strip()
+    df['City_State_Zip'] = df['City_State_Zip'].str.strip()
+    df['Phone_Number'] = df['Phone_Number'].str.strip()
+    df['District'] = df['District'].str.strip()
     df.to_csv(out_csv, index = False)
 
 def Main():

@@ -47,13 +47,14 @@ def scrapeHouse():
         rep2 = rep1.split('/b')
         rep3 = rep2[0]
         rep4 = rep3.split('\n')
-        name = rep4[1].split('(')
-        name1 = name[0]
-        nameList.append(name1)
+        name = rep4[1].split(',')
+        name1 = name[0].rsplit(' (',1)
+        name2 = name1[0]
+        nameList.append(name2)
         party = rep4[1].split(',')[-1].replace(")","").replace(" ","")
         partyList.append(party)
         district = rep4[1].split(',')[0]
-        district1 = district[-3:]
+        district1 = district[-3:].lstrip('0')
         districtList.append(district1)
         office = rep4[2].strip()
         officeList.append(office)
@@ -66,10 +67,10 @@ def scrapeHouse():
     driver.close()
     #pandads
     df = pd.DataFrame(np.column_stack([nameList, districtList, partyList, officeList, cityList, phoneList, emailList]),
-                         columns=['House Member', 'District', 'Party', 'Office Address', 'City, State, Zip', 'Phone Number', 'Email'])
+                         columns=['House_Member', 'District', 'Party', 'Office_Address', 'City_State_Zip', 'Phone_Number', 'Email'])
     df.drop_duplicates(inplace = True)
-    df['House Member'] = df['House Member'].str.strip()
+    df['House_Member'] = df['House_Member'].str.strip()
     df.to_csv(out_csv, index = False)
-    
+
     return df        
 df = scrapeHouse()
