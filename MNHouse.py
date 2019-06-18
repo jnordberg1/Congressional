@@ -22,6 +22,7 @@ officeList = []
 cityList = []
 phoneList = []
 emailList = []
+out_csv = r'C:\USS\United States Solar Corporation\Site Selection - Documents\Data\State\MN\Source\shp_bdry_housedistricts2012\HouseMembers.csv'
 def scrapeHouse():
     option = webdriver.ChromeOptions()
     chrome_prefs = {}
@@ -56,15 +57,15 @@ def scrapeHouse():
         cityList.append(city)
         phone = rep4[6].strip()
         phoneList.append(phone) 
-        email = rep4[8].strip()
+        email = rep4[8].strip().replace("E-mail: ", "")
         emailList.append(email)
     driver.close()
     #pandads
     df = pd.DataFrame(np.column_stack([nameList, districtList, partyList, officeList, cityList, phoneList, emailList]),
-                         columns=['House Member', 'District', 'Party', 'Office Address', 'City', 'Phone Number', 'Email'])
+                         columns=['House Member', 'District', 'Party', 'Office Address', 'City, State, Zip', 'Phone Number', 'Email'])
     df.drop_duplicates(inplace = True)
     df['House Member'] = df['House Member'].str.strip()
-    df.to_csv("HouseMembers.csv", index = False)
+    df.to_csv(out_csv, index = False)
     
     return df        
 df = scrapeHouse()

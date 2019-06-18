@@ -22,6 +22,8 @@ officeList = []
 cityList = []
 phoneList = []
 emailList = []
+na = "Email Not Available"
+out_csv = r'C:\USS\United States Solar Corporation\Site Selection - Documents\Data\State\MN\Source\shp_bdry_senatedistricts2012\SenateMembers.csv'
 
 def scrapeSenate():
     option = webdriver.ChromeOptions()
@@ -52,32 +54,45 @@ def scrapeSenate():
         districtList.append(district)
         name = rep4[0]
         nameList.append(name)
-        #print rep3[2]
-        if "(" in rep3[2]:
-            rep5 = rep[3]
-        else:
+        if "(" not in rep3[2]:
             rep5 = rep3[2]
+        else:
+            rep5 = rep3[3]
         office = rep5
-        print office
-        """
         officeList.append(office)
-        city = rep3[4]
+        
+        if "St." in rep3[4]:
+            rep6 = rep3[4].strip()   
+        else:
+            rep6 = rep3[5].strip()
+        city = rep6
         cityList.append(city)
-        phone = rep3[6]
+        
+        if "651" in rep3[6]:
+            rep7 = rep3[6]
+        else:
+            rep7 = rep3[7]
+        phone = rep7
         phoneList.append(phone)
-        email = rep3[8]
-        emailList.append(email)
-    driver.close()
 
+        if "@" in rep3[8]:
+            rep8 = rep3[8]
+        else:
+            rep8 = na
+        email = rep8
+        emailList.append(email)
+
+    driver.close()
     #pandas
+
     df = pd.DataFrame(np.column_stack([nameList, districtList, partyList, officeList, cityList, phoneList, emailList]),
                          columns=['Senator', 'District', 'Party', 'Office Address', 'City, State, Zip', 'Phone Number', 'Email'])
     df.drop_duplicates(inplace = True)
     df['Senator'] = df['Senator'].str.strip()
     df['City, State, Zip'] = df['City, State, Zip'].str.strip()
     df['Phone Number'] = df['Phone Number'].str.strip()
-    df.to_csv("SenateMembers.csv", index = False)
-"""
+    df.to_csv(out_csv, index = False)
+
 def Main():
     scrapeSenate()
     
