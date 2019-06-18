@@ -11,10 +11,13 @@ import datetime
 import pandas as pd
 import numpy as np
 import os
+
 script_path = r'C:\Users\JacobNordberg\Documents\GitHub\Congressional'
 os.chdir(script_path)
+
 print "Start time:"
 print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
 nameList = []
 districtList = []
 partyList = []
@@ -23,6 +26,7 @@ cityList = []
 phoneList = []
 emailList = []
 out_csv = r'C:\USS\United States Solar Corporation\Site Selection - Documents\Data\State\MN\Source\shp_bdry_housedistricts2012\HouseMembers.csv'
+
 def scrapeHouse():
     option = webdriver.ChromeOptions()
     chrome_prefs = {}
