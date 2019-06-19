@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 import arcpy
 import os
 from arcpy import env
@@ -17,7 +18,7 @@ arcpy.TableToTable_conversion(in_csv, "in_memory", phi)
 arcpy.CopyFeatures_management(in_shp, out_shp)
 
 join_fields = ['House_Member', 'Party']
-arcpy.JoinField_management(out_shp, "MNLEGDIST", os.path.join("in_memory", phi), "District", join_fields)
+arcpy.JoinField_management(out_shp, "district", os.path.join("in_memory", phi), "District", join_fields)
 
 arcpy.CalculateField_management(out_shp, 'name', '!House_Memb!', 'PYTHON_9.3') #<-- this would be easier if you picked better names in your scraping
 arcpy.CalculateField_management(out_shp, 'party', '!Party_1!', 'PYTHON_9.3') #<-- this would be easier if you picked better names in your scraping

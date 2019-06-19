@@ -54,7 +54,7 @@ def scrapeHouse():
         party = rep4[1].split(',')[-1].replace(")","").replace(" ","")
         partyList.append(party)
         district = rep4[1].split(',')[0]
-        district1 = district[-3:].lstrip('0')
+        district1 = district[-3:]
         districtList.append(district1)
         office = rep4[2].strip()
         officeList.append(office)

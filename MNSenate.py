@@ -26,7 +26,7 @@ cityList = []
 phoneList = []
 emailList = []
 na = "Email Not Available"
-out_csv = r'C:\USS\United States Solar Corporation\Site Selection - Documents\Data\State\MN\Source\shp_bdry_senatedistricts2012\SenateMembers.csv'
+out_csv = r'C:\USS\United States Solar Corporation\Site Selection - Documents\Data\State\MN\Source\shp_bdry_senatedistricts2012\SenateMembers1.csv'
 
 def scrapeSenate():
     option = webdriver.ChromeOptions()
